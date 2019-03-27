@@ -4,11 +4,11 @@
 spool Project3_djr.txt
 set echo on
 
---List the average rate amount for all rooms reserved
+--Problem 7 example. List the average rate amount for all rooms reserved
 SELECT AVG(RateAmt)
 FROM ResDetail_djr; --Gets the average amount
 
---List the average rate amount for all rooms reserved
+--Problem 8 example. List the average rate amount for all rooms reserved
 SELECT Count(DISTINCT TitleID)
 FROM Disk_djr;
 
@@ -28,10 +28,16 @@ FROM Customer_djr;
 SELECT MIN(RateAmt)
 FROM ResDetail_djr;
 
---List the CustType and count of customers for each type. 
+--Problem 9 example. List the CustType and count of customers for each type. 
 SELECT CustType, Count(CustID)
 FROM Customer_djr
 GROUP BY CustType;
+
+--Problem 10 Example. List the ResNum, CheckIn, CheckOut, and the total nightly rate charged for Reservation 1001
+--Close the output file
+SELECT R.ResNum, CheckIN, CheckOut, SUM(RateAmt)
+FROM Reservation R, ResDetail RD
+WHERE R.ResNum = RD.ResNum AND R.ResNum = 10;
 
 --Turns off Spooling and echoing
 spool off
