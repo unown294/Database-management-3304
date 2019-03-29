@@ -1,8 +1,8 @@
---project 3 example
-
 --Turns on Spooling and echoing
 spool Project3_djr.txt
 set echo on
+
+--project 3 example
 
 --Problem 7 example. List the average rate amount for all rooms reserved
 SELECT AVG(RateAmt)
@@ -33,11 +33,14 @@ SELECT CustType, Count(CustID)
 FROM Customer_djr
 GROUP BY CustType;
 
---Problem 10 Example. List the ResNum, CheckIn, CheckOut, and the total nightly rate charged for Reservation 1001
+--Problem 10 Example. List the ResNum, CheckIn, CheckOut, and the total nightly rate charged for Reservation 1001. Use the following headings:
+-- ResNumber, CkInDate, CkOutDate, NightlyTtl
 --Close the output file
-SELECT R.ResNum, CheckIN, CheckOut, SUM(RateAmt)
-FROM Reservation R, ResDetail RD
-WHERE R.ResNum = RD.ResNum AND R.ResNum = 10;
+SELECT R.ResNum as 'ResNumber', CheckIN as 'CkInDate', CheckOut as 'CkOutDate', TO_CHAR(SUM(RateAmt), '$###,###.##') as 'NightlyTtl'
+  FROM Reservation R, ResDetail RD
+ WHERE R.ResNum = RD.ResNum AND 
+	   R.ResNum = 1001;
+	   
 
 --Turns off Spooling and echoing
 spool off
