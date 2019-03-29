@@ -8,7 +8,7 @@ set echo on
 SELECT AVG(RateAmt)
 FROM ResDetail_djr; --Gets the average amount
 
---Problem 8 example. List the average rate amount for all rooms reserved
+--Problem 8 example. List the average rate amount for all rooms reserved. Actual how its suppose to be done.
 SELECT Count(DISTINCT TitleID)
 FROM Disk_djr;
 
@@ -40,7 +40,29 @@ SELECT R.ResNum as 'ResNumber', CheckIN as 'CkInDate', CheckOut as 'CkOutDate', 
   FROM Reservation R, ResDetail RD
  WHERE R.ResNum = RD.ResNum AND 
 	   R.ResNum = 1001;
+
+-- List the CustID, CustFName, CustLName, and count of reservation for each customer. Cpmbine the first and last name into one column
+--Sort by reservation count in descending order, then by customer ID in ascending order. Hint:  Use a GROUP BY clause.
+SELECT R.CustID, CustFName || ' ' || CustLName, Count(ResID) as 'ResCount' -- || is used for string cancatination which joins the values together into one column without a space
+FROM Reservation_djr R, Customer_djr C
+WHERE R.CustID = C.CustID
+GROUP BY R.CustID, CustFName, CustLName 
+ORDER BY 'ResCount' DESC, R.CustID;
 	   
+--Problem 11 Example. List all rows and all columns from the RentalDetail table; sort by Rental ID then by Disk ID, both in ascending order.
+--Use the following column headings:  RentalID, DiskID, FeeCode.
+SELECT * FROM ResDetail_djr
+ ORDER BY ResNum, RoomNum; --DESC would be used to specify if the numbers would be descending
+ 
+--Problem 12 example.  List the AgentType, AgentDESC, and count of Agents for each type.  
+--Sort by count in descending order. Hint:  Use a GROUP BY clause. 
+SELECT A.AgentType, AgentDesc, Count(AgentID)
+FROM Agent_djr A				 
+INNER JOIN AgentType_djr ATT ON		-- cant use the alias AT as its a command that waits for a command so ATT was substituted.
+A.AgentType = ATT.AgentType;
+
+	--Other join types
+
 
 --Turns off Spooling and echoing
 spool off
