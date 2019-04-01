@@ -36,7 +36,7 @@ GROUP BY CustType;
 --Problem 10 Example. List the ResNum, CheckIn, CheckOut, and the total nightly rate charged for Reservation 1001. Use the following headings:
 -- ResNumber, CkInDate, CkOutDate, NightlyTtl
 --Close the output file
-SELECT R.ResNum as 'ResNumber', CheckIN as 'CkInDate', CheckOut as 'CkOutDate', TO_CHAR(SUM(RateAmt), '$###,###.##') as 'NightlyTtl'
+SELECT R.ResNum as 'ResNumber', CheckIN as 'CkInDate', CheckOut as 'CkOutDate', TO_CHAR(SUM(RateAmt), '$999,999.99') as 'NightlyTtl'
   FROM Reservation R, ResDetail RD
  WHERE R.ResNum = RD.ResNum AND 
 	   R.ResNum = 1001;
@@ -59,10 +59,28 @@ SELECT * FROM ResDetail_djr
 SELECT A.AgentType, AgentDesc, Count(AgentID)
 FROM Agent_djr A				 
 INNER JOIN AgentType_djr ATT ON		-- cant use the alias AT as its a command that waits for a command so ATT was substituted.
-A.AgentType = ATT.AgentType;
+A.AgentType = ATT.AgentType
+GROUP BY A.Agentype, AgentDesc;
 
-	--Other join types
+--Other join types
 
+--Problem 13 example. List the ResID, CustID, CustLName, CustPhone for all reservations. Format the phone number as ###.###.####. Use the following
+--alternate column headings: ResID CustomerID, LastName, Phone. Sort by ResID
+SELECT ResID as 'ResID', C.CustID as 'CustomerID', CustLName as 'LastName', SUBSTR(CustPhone, 1,3) || '.' || SUBSTR(CustPhone, 4,3) || '.' || SUBSTR(CustID, 7,4) as 'Phone'
+FROM Reservation_djr R, Customer_djr C
+WHERE R.CustID = C.CustID
+ORDER BY ResID;
+
+--Problem 14 example. 
+
+SELECT ResNum, RD.RoomNum, R.RoomType, RoomDesc, RateAmt
+FROM ResDetail_djr RD, Room_djr R, RoomType_djr RT
+WHERE RD.RoomNum = R.RoomNum AND
+	  R.RoomType = RT.RoomType AND
+ResID, RateAmt IN
+	(SELECT ResID, MAX(RateAmt)
+	 FROM ResDetail_djr
+	 GROUP BY ResID);
 
 --Turns off Spooling and echoing
 spool off
