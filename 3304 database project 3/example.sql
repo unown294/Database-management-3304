@@ -91,6 +91,13 @@ WHERE RD.RoomNum = R.RoomNum AND
 	     FROM ResDetail_djr
 	    WHERE ResNum = 1008);
 
+--Problem 30 example
+--List the CustID, First name, and last name for all customers whose first name starts with an 'M'
+--And last name starts with a 'V'
+SELECT CustID, CustFName, CustLName
+  FROM Customer_djr
+ WHERE CustFName LIKE 'M%' AND --The % means Remainder or whats after
+	   CustLName Like 'V%';
 
 --Close the output file	  
 --Turns off Spooling and echoing
