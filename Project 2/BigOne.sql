@@ -1,18 +1,22 @@
 --Dalton James Redman
 --Project 2
 
+--PART I
+
 --Turns on Spooling and echoing
 spool Project2_djr.txt
 set echo on
 
+--Creates the tables as listed
+
 CREATE TABLE Rating_djr(
 	RatingID	char(6)		NOT NULL	PRIMARY KEY,
-	RatingDesc	varchar(36)
+	RatingDesc	varchar(45)
 );
 
 CREATE TABLE Genre_djr(
 	GenreID		char(2)		NOT NULL	PRIMARY KEY,
-	GenreDesc	varchar(36)
+	GenreDesc	varchar(45)
 );
 
 CREATE TABLE Customer_djr(
@@ -73,6 +77,20 @@ CREATE TABLE RentalDetail_djr(
 	CONSTRAINT con_Disk FOREIGN KEY (DiskID) REFERENCES Disk_djr(DiskID),
 	CONSTRAINT con_Rental FOREIGN KEY (RentailID) REFERENCES Rental_djr(RentailID)
 );
+
+--Describes the tables
+DESCRIBE RentalDetail_djr;
+DESCRIBE Title_djr;
+DESCRIBE Disk_djr;
+DESCRIBE Rental_djr;
+DESCRIBE Format_djr;
+DESCRIBE Fee_djr;
+DESCRIBE Genre_djr;
+DESCRIBE Customer_djr;
+DESCRIBE Clerk_djr;
+DESCRIBE Rating_djr;
+
+--Part II
 
 /* Insert command for Rating table*/
 INSERT INTO Rating_djr(RatingID,RatingDesc)	VALUES ('R','Restricted Under 17');
@@ -196,6 +214,7 @@ SELECT * FROM Customer_djr;
 SELECT * FROM Clerk_djr;
 SELECT * FROM Rating_djr;
 
+--Part III
 --Updates
 
 /* Updates customer 83 */
@@ -246,6 +265,7 @@ INSERT INTO Rating_djr(RatingID, RatingDesc) VALUES ('NR', 'Not Rated');
 --Saves data
 COMMIT;
 
+--Part IV
 --Prints updated data
 
 SELECT * FROM RentalDetail_djr;
